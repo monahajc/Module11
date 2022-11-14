@@ -70,14 +70,13 @@ public class GameData : NetworkBehaviour {
     // Events
     // --------------------------
     private void HostOnClientConnected(ulong clientId) {
+        Debug.Log($"[GameData] Client connected {clientId}");
         AddPlayerToList(clientId);
     }
 
     private void HostOnClientDisconnected(ulong clientId) {
-        int index = FindPlayerIndex(clientId);
-        if (index != -1) {
-            allPlayers.RemoveAt(index);
-        }
+        Debug.Log($"[GameData] Client disconnected {clientId}");
+        RemovePlayerFromList(clientId);
     }
 
 
@@ -88,6 +87,14 @@ public class GameData : NetworkBehaviour {
         allPlayers.Add(new PlayerInfo(clientId, NextColor(), true));
     }
 
+    public void RemovePlayerFromList(ulong clientId)
+    {
+        int index = FindPlayerIndex(clientId);
+        if (index != -1)
+        {
+            allPlayers.RemoveAt(index);
+        }
+    }
 
     public int FindPlayerIndex(ulong clientId) {
         var idx = 0;

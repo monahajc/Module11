@@ -4,6 +4,7 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class ChatUI : NetworkBehaviour {
 
     const ulong SYSTEM_ID = 999999999;
@@ -120,5 +121,13 @@ public class ChatUI : NetworkBehaviour {
         }
         string newMessage = $"\n[{who}]:  {message}";
         txtChatLog.text += newMessage;
+    }
+
+    public void SendSystemMessage(string msg)
+    {
+        if (IsHost)
+        {
+            SendChatMessageClientRpc(msg, SYSTEM_ID);
+        }
     }
 }
